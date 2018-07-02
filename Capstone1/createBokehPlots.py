@@ -7,22 +7,21 @@ from bokeh.plotting import ColumnDataSource
 from bokeh.models import HoverTool, Slider
 from bokeh.io import curdoc
 from bokeh.layouts import row, column
+from bokeh.models import Div
 from bokeh.models import LinearAxis, Range1d, LogAxis
-from bokeh.models import LogColorMapper
-from bokeh.palettes import Viridis6 as palette1
-from bokeh.palettes import Blues8 as palette
+from bokeh.models import LogColorMapper,LogTicker, ColorBar
 from bokeh.models.widgets import Panel
 from bokeh.models.widgets import Tabs
 
 # Macroeconomic data
 sp500 = pd.read_csv('./EconomicIndices/sp500_month.csv')
 sp500['Date'] = pd.to_datetime(sp500['Date'])
-source_sp500 = ColumnDataSource(sp500)
+sp500.set_index('Date',inplace=True)
 
 # Oil Price data
 oil_price = pd.read_csv('./OilPrices/oil_price_by_month.csv')
 oil_price['Date'] = pd.to_datetime(oil_price['Date'])
-source_oil_price = ColumnDataSource(oil_price)
+oil_price.set_index('Date',inplace=True)
 
 # Set date for geographical maps
 cur_year = 1996
@@ -36,6 +35,19 @@ month_dict = dict(zip(range(1,13),['January','February', 'March', 'April', 'May'
 def create_plots(state,oil_prod,unemp,lab_force):
     target_state = (state)
     state_dict = {'tx':'Texas','nd':'North Dakota','wy':'Wyoming'}
+
+    min_date = max(min(unemp.index), min(oil_prod.index))
+    max_date = min(max(unemp.index), max(oil_prod.index))
+
+    cur_sp500 = sp500.loc[min_date:max_date]
+    source_sp500 = ColumnDataSource(cur_sp500)
+
+    cur_oil_price = oil_price.loc[min_date:max_date]
+    source_oil_price = ColumnDataSource(cur_oil_price)
+
+    oil_prod = oil_prod.loc[min_date:max_date]
+    unemp = unemp.loc[min_date:max_date]
+    lab_force = lab_force.loc[min_date:max_date]
 
     county_xs = [counties[code]["lons"] for code in counties if counties[code]["state"] in target_state]
     county_ys = [counties[code]["lats"] for code in counties if counties[code]["state"] in target_state]
@@ -54,11 +66,11 @@ def create_plots(state,oil_prod,unemp,lab_force):
         prod=county_prods
     ))
 
-    unemp_color_mapper = LogColorMapper(palette=palette1)
+    unemp_color_mapper = LogColorMapper(palette="Viridis256",low=max(min(county_rates),0.1),high=max(county_rates))
 
-    fig_unemp = figure(title='%s unemployment data for %s, %d' % (state_dict[state], month_dict[cur_month], cur_year),
+    fig_unemp = figure(title='%s unemployment rate for %s, %d' % (state_dict[state], month_dict[cur_month], cur_year),
                           toolbar_location="left", tools=TOOLS,
-                          plot_width=500, plot_height=500)
+                          plot_width=500, plot_height=450)
 
     pyglyph = fig_unemp.patches('x', 'y', source=source_maps,
                                    fill_color={'field': 'rate', 'transform': unemp_color_mapper},
@@ -81,11 +93,15 @@ def create_plots(state,oil_prod,unemp,lab_force):
         ("(Long, Lat)", "($x, $y)"),
     ]
 
-    prod_color_mapper = LogColorMapper(palette=palette)
+    unemp_color_bar = ColorBar(color_mapper=unemp_color_mapper, ticker=LogTicker(),
+                               border_line_color=None, location=(0, 0))
+    fig_unemp.add_layout(unemp_color_bar,'right')
+
+    prod_color_mapper = LogColorMapper(palette="BuGn7",low=max(min(county_prods),0.1),high=max(county_prods))
 
     fig_prods = figure(title='%s production data for %s, %d' % (state_dict[state], month_dict[cur_month], cur_year),
                           toolbar_location="left", tools=TOOLS,
-                          plot_width=500, plot_height=500)
+                          plot_width=500, plot_height=450)
 
     pyglyph_prod = fig_prods.patches('x', 'y', source=source_maps,
                                         fill_color={'field': 'prod', 'transform': prod_color_mapper},
@@ -106,6 +122,10 @@ def create_plots(state,oil_prod,unemp,lab_force):
         ("Production", "@prod bbls"),
         ("(Long, Lat)", "($x, $y)"),
     ]
+
+    prod_color_bar = ColorBar(color_mapper=prod_color_mapper, ticker=LogTicker(),
+                               label_standoff=12, border_line_color=None, location=(0, 0))
+    fig_prods.add_layout(prod_color_bar, 'right')
 
     cur_county = county_names[0]
     source_oil = ColumnDataSource(data=dict(
@@ -273,7 +293,7 @@ def create_plots(state,oil_prod,unemp,lab_force):
         source_maps.data = new_data
 
         # Add title to figure: plot.title.text
-        fig_unemp.title.text = '%s unemployment data for %s, %d' % (state_dict[state],month_dict[new_month], new_year)
+        fig_unemp.title.text = '%s unemployment rate for %s, %d' % (state_dict[state],month_dict[new_month], new_year)
 
         # Add title to figure: plot.title.text
         fig_prods.title.text = '%s production data for %s, %d' % (state_dict[state],month_dict[new_month], new_year)
@@ -369,6 +389,7 @@ tab1 = Panel(child=tx_layout,title='Texas')
 tab2 = Panel(child=nd_layout,title='North Dakota')
 tab3 = Panel(child=wy_layout,title='Wyoming')
 
-layout = Tabs(tabs=[tab1, tab2, tab3])
+tabs = Tabs(tabs=[tab1, tab2, tab3])
+layout = tabs#column(Div(text="<h1>Capstone 1: Fossil fuel economies in the US: Texas, North Dakota and Wyoming"),tabs)
 #show(layout)
 curdoc().add_root(layout)
