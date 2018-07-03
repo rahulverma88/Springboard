@@ -14,8 +14,8 @@
       <file leaf-file-name="createBokehPlots.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/createBokehPlots.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="67" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+            <state relative-caret-position="-4332">
+              <caret line="15" column="56" lean-forward="true" selection-start-line="15" selection-start-column="56" selection-end-line="15" selection-end-column="56" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -54,8 +54,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/bokehPlots_short.py" />
-        <option value="$PROJECT_DIR$/createBokehPlots.py" />
         <option value="$PROJECT_DIR$/inferentialStats.py" />
+        <option value="$PROJECT_DIR$/createBokehPlots.py" />
       </list>
     </option>
   </component>
@@ -203,8 +203,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/createBokehPlots.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="67" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+        <state relative-caret-position="-4332">
+          <caret line="15" column="56" lean-forward="true" selection-start-line="15" selection-start-column="56" selection-end-line="15" selection-end-column="56" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

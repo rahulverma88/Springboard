@@ -7,7 +7,6 @@ from bokeh.plotting import ColumnDataSource
 from bokeh.models import HoverTool, Slider
 from bokeh.io import curdoc
 from bokeh.layouts import row, column
-from bokeh.models import Div
 from bokeh.models import LinearAxis, Range1d, LogAxis
 from bokeh.models import LogColorMapper,LogTicker, ColorBar
 from bokeh.models.widgets import Panel
