@@ -141,9 +141,9 @@ def create_plots(state,oil_prod,unemp,lab_force):
         lab_force=lab_force[cur_county]
     ))
 
-    fig1.circle('Date', 'WTI', source=source_oil_price, legend="Oil Price, $", selection_color='red',
+    fig1.circle('Date', 'WTI', source=source_oil_price, legend_label="Oil Price, $", selection_color='red',
                    nonselection_fill_color='grey', nonselection_fill_alpha=0.2)
-    fig1.line('Date', 'WTI', source=source_oil_price, legend="Oil Price, $")
+    fig1.line('Date', 'WTI', source=source_oil_price, legend_label="Oil Price, $")
     fig1.xaxis.axis_label = 'Date'
     fig1.yaxis.axis_label = 'Oil Price, $ (month avg.)'
     fig1.y_range = Range1d(start=0, end=150)
@@ -157,21 +157,21 @@ def create_plots(state,oil_prod,unemp,lab_force):
                                                  end=max(lab_force[cur_county]) + 1000)
     fig1.add_layout(LogAxis(y_range_name="labforce", axis_label='Labor Force (log)'), 'right')
 
-    fig1.circle('date', 'unemp', source=source_figures, y_range_name="unemp", legend="Unemployment rate (%)",
+    fig1.circle('date', 'unemp', source=source_figures, y_range_name="unemp", legend_label="Unemployment rate (%)",
                    color='orange')
-    fig1.line('date', 'unemp', source=source_figures, y_range_name="unemp", legend="Unemployment rate (%)",
+    fig1.line('date', 'unemp', source=source_figures, y_range_name="unemp", legend_label="Unemployment rate (%)",
                  color='orange')
 
-    fig1.circle('date', 'lab_force', source=source_figures, y_range_name="labforce", legend="Labor Force (log)",
+    fig1.circle('date', 'lab_force', source=source_figures, y_range_name="labforce", legend_label="Labor Force (log)",
                    color='green')
-    fig1.line('date', 'lab_force', source=source_figures, y_range_name="labforce", legend="Labor Force (log)",
+    fig1.line('date', 'lab_force', source=source_figures, y_range_name="labforce", legend_label="Labor Force (log)",
                  color='green')
     fig1.legend.location = 'top_left'
     fig1.legend.label_text_font_size = '8pt'
 
     fig2 = figure(title='Employment vs Oil production for ' + cur_county, x_axis_type='datetime', plot_width=700,
                      plot_height=400, toolbar_location='left', tools=TOOLS)
-    fig2.circle('date', 'oil_prod', source=source_oil, legend='Oil production (bbls)', hover_color='red',
+    fig2.circle('date', 'oil_prod', source=source_oil, legend_label='Oil production (bbls)', hover_color='red',
                    selection_color='red', nonselection_fill_color='grey', nonselection_fill_alpha=0.2)
     fig2.xaxis.axis_label = 'Date'
     fig2.yaxis.axis_label = 'Oil Production (bbls)'
@@ -186,21 +186,21 @@ def create_plots(state,oil_prod,unemp,lab_force):
                                                  end=max(lab_force[cur_county] + 1000))
     fig2.add_layout(LogAxis(y_range_name="labforce", axis_label='Labor Force (log)'), 'right')
 
-    fig2.circle('date', 'unemp', source=source_figures, y_range_name="unemp", legend="Unemployment rate (%)",
+    fig2.circle('date', 'unemp', source=source_figures, y_range_name="unemp", legend_label="Unemployment rate (%)",
                    color='orange')
-    fig2.line('date', 'unemp', source=source_figures, y_range_name="unemp", legend="Unemployment rate (%)",
+    fig2.line('date', 'unemp', source=source_figures, y_range_name="unemp", legend_label="Unemployment rate (%)",
                  color='orange')
 
-    fig2.circle('date', 'lab_force', source=source_figures, y_range_name="labforce", legend="Labor Force (log)",
+    fig2.circle('date', 'lab_force', source=source_figures, y_range_name="labforce", legend_label="Labor Force (log)",
                    color='green')
-    fig2.line('date', 'lab_force', source=source_figures, y_range_name="labforce", legend="Labor Force (log)",
+    fig2.line('date', 'lab_force', source=source_figures, y_range_name="labforce", legend_label="Labor Force (log)",
                  color='green')
     fig2.legend.location = 'top_left'
     fig2.legend.label_text_font_size = '8pt'
 
     fig3 = figure(title='Employment vs S&P 500 for ' + cur_county, x_axis_type='datetime', plot_width=700,
                      plot_height=400, toolbar_location='left', tools=TOOLS)
-    fig3.circle('Date', 'SP500', source=source_sp500, legend='S&P 500 index', hover_color='red',
+    fig3.circle('Date', 'SP500', source=source_sp500, legend_label='S&P 500 index', hover_color='red',
                    selection_color='red', nonselection_fill_color='grey', nonselection_fill_alpha=0.2)
     fig3.xaxis.axis_label = 'Date'
     fig3.yaxis.axis_label = 'S&P 500 index'
@@ -215,22 +215,21 @@ def create_plots(state,oil_prod,unemp,lab_force):
                                                  end=max(lab_force[cur_county] + 1000))
     fig3.add_layout(LogAxis(y_range_name="labforce", axis_label='Labor Force (log)'), 'right')
 
-    fig3.circle('date', 'unemp', source=source_figures, y_range_name="unemp", legend="Unemployment rate (%)",
+    fig3.circle('date', 'unemp', source=source_figures, y_range_name="unemp", legend_label="Unemployment rate (%)",
                    color='orange')
-    fig3.line('date', 'unemp', source=source_figures, y_range_name="unemp", legend="Unemployment rate (%)",
+    fig3.line('date', 'unemp', source=source_figures, y_range_name="unemp", legend_label="Unemployment rate (%)",
                  color='orange')
 
-    fig3.circle('date', 'lab_force', source=source_figures, y_range_name="labforce", legend="Labor Force (log)",
+    fig3.circle('date', 'lab_force', source=source_figures, y_range_name="labforce", legend_label="Labor Force (log)",
                    color='green')
-    fig3.line('date', 'lab_force', source=source_figures, y_range_name="labforce", legend="Labor Force (log)",
+    fig3.line('date', 'lab_force', source=source_figures, y_range_name="labforce", legend_label="Labor Force (log)",
                  color='green')
     fig3.legend.location = 'top_left'
     fig3.legend.label_text_font_size = '8pt'
 
     def fig_callback_tap(attr, old, new):
         try:
-            # The index of the selected glyph is : new['1d']['indices'][0]
-            selections = new['1d']['indices']
+            selections = new
             patch_name = source_maps.data['name'][selections[0]]
             source_figures.data = dict(
                 date=unemp.index,
@@ -242,7 +241,7 @@ def create_plots(state,oil_prod,unemp,lab_force):
                 oil_prod=oil_prod[patch_name]
             )
         except:
-            selections = old['1d']['indices']
+            selections = old
             patch_name = source_maps.data['name'][selections[0]]
             source_figures.data = dict(
                 date=unemp.index,
@@ -267,8 +266,8 @@ def create_plots(state,oil_prod,unemp,lab_force):
         fig3.extra_y_ranges['labforce'].start = max(100, min(lab_force[patch_name]) - 1000)
         fig3.extra_y_ranges['labforce'].end = max(lab_force[patch_name] + 1000)
 
-    pyglyph.data_source.on_change('selected', fig_callback_tap)
-    pyglyph_prod.data_source.on_change('selected', fig_callback_tap)
+    source_maps.selected.on_change('indices', fig_callback_tap)
+    #pyglyph_prod.selected.on_change('indices', fig_callback_tap)
 
     def update_plot_yr(attr, old, new):
         # Assign the value of the slider: new_year
